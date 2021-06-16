@@ -4,8 +4,9 @@
 
     </head>
     <body>
-        <div class="Signup-form">
-            <form id="Signup-form">
+        {{title}}
+        <div class="Signup-form" action="/signup" method="POST">
+            <form id="Signup-form"> 
             <label>Email</label>
             <input type="text" name="email" placeholder="Email" required>
             <label>Password</label>
@@ -14,7 +15,8 @@
             <input type="text" name="name" placeholder="Name" required>
             <button>Signup</button>
         </form>
-
+        <p id=message></p>
         </div>
+        <script src="/app.js"></script>
     </body>
 </html>

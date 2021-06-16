@@ -35,7 +35,7 @@ const userSchema=new mongoose.Schema({
   },
   anniversaryDate:{
     type:Date,
-    default:new Date('2020-06-09')
+    default:new Date().setFullYear(new Date().getFullYear()+1)
   },
   newMembershipPoints:{
       type:Number,
