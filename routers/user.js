@@ -20,6 +20,8 @@ router.post('/users/login',async(req,res)=>{
         const user=await User.findByCredentials(req.body.email,req.body.password)
         const token=await user.generateAuthToken()
         res.send({user,token})
+        await user.save()
+       
     }catch(e){
         res.status(400).send('Please enter right email or password')
         console.log(e)
@@ -34,6 +36,7 @@ router.post('/products',auth,async(req,res)=>{
         expiryDate:req.user.anniversaryDate
     })
     try{
+        await req.user.updated
         await product.save()
         res.status(201).send(product)
     }catch(e){
@@ -42,16 +45,12 @@ router.post('/products',auth,async(req,res)=>{
     }
 })
 router.get('/users/me',auth,async(req,res)=>{
+    await req.user.updated
     res.send(req.user)
 })
 router.get('/products',auth,async(req,res)=>{
+    await req.user.updated
     const products=await Product.find({owner:req.user._id})
     res.send(products)
-})
-router.get('/users/login',(req,res)=>{
-    res.sendFile(__dirname + "/login.html")
-})
-router.get('/users',(req,res)=>{
-    res.sendFile(__dirname+"/signup.html")
 })
 module.exports=router

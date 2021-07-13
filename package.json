@@ -4,8 +4,8 @@
   "description": "",
   "main": "model.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js -e js,hbs"
+    "start": "node Controller/app.js",
+    "dev": "nodemon Controller/app.js -e js,hbs"
   },
   "author": "",
   "license": "ISC",
@@ -16,8 +16,10 @@
     "express": "^4.17.1",
     "hbs": "^4.1.2",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mongodb": "^3.6.8",
     "mongoose": "^5.12.13",
+    "qs": "^6.7.0",
     "validator": "^13.6.0"
   },
   "devDependencies": {

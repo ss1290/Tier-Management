@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+        <title>
+            {{title}}
+        </title>
+        <link rel="stylesheet" href="/stylesheet/styles.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
     <body>
-        {{title}}
-        <div class="Signup-form" action="/signup" method="POST">
-            <form id="Signup-form"> 
-            <label>Email</label>
-            <input type="text" name="email" placeholder="Email" required>
-            <label>Password</label>
-            <input type="text" name="password" placeholder="Password" required>
-            <label>Name</label>
-            <input type="text" name="name" placeholder="Name" required>
-            <button>Signup</button>
-        </form>
-        <p id=message></p>
-        </div>
-        <script src="/app.js"></script>
-    </body>
-</html>
+        <div class="signup-form">
+            <div class="signup-form__box">
+                <form id="signupForm">
+                    <label>Email</label>
+                    <input type="text" id="email" placeholder="Email" required>
+                    <br>
+                    <label>Password</label>
+                    <input type="text" id="password" placeholder="Password" required>
+                    <br>
+                    <label>Name</label>
+                    <input type="text" id="name" placeholder="Name" required>
+                    <br>
+                    <button>Signup</button>
+                    </form>
+                </div>
+            </div>
+            <script src="/js/signup.js"></script>
+            </body>
+            </html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/stylesheet/styles.css">
+    </head>
+    <body>
+        <h1>{{title}}</h1>
+        <div>
+            <form id="products">
+            <label>Product Name</label>
+            <input type="text" id="productName" placeholder="Product Name" required>
+            <br>
+            <label>Product Cost</label>
+            <input type="text" id="productCost" placeholder="Product Cost" required>
+            <br>
+            <button>Add</button>
+        </form>
+        </div>
+        <p class="name" id="name"></p>
+        <p class="cost" id="cost"></p>
+        <button id="profile">Profile</button>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+        <script src="/js/product.js"></script>
+    </body>
+</html>

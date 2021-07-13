@@ -2,10 +2,11 @@ const mongoose=require('mongoose')
 const validator=require('validator')
 const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
+const moment=require('moment')
 const userSchema=new mongoose.Schema({
   name:{
       type:String,
-      require:true,
+      required:true,
       trim:true
   },
   email:{
@@ -31,11 +32,11 @@ const userSchema=new mongoose.Schema({
   },
   signupDate:{
       type:Date,
-      default:new Date()
+      default:moment().format()
   },
   anniversaryDate:{
     type:Date,
-    default:new Date().setFullYear(new Date().getFullYear()+1)
+    default:moment().add(1,'years').format()
   },
   newMembershipPoints:{
       type:Number,
@@ -56,25 +57,14 @@ const userSchema=new mongoose.Schema({
         default:null
   }
 })
-userSchema.methods.toJSON=function(){
-    const user=this
-    const userObject=user.toObject()
-    delete userObject.password
-    delete userObject.tokens
-    return userObject
-}
-userSchema.methods.date=async function(){
-    const date=new Date()
-    return date
-}
 userSchema.methods.generateAuthToken=async function(){
     const user=this
-    const token=jwt.sign({_id:user._id.toString()},'myfirstProgram')
+    const token=jwt.sign({_id:user._id.toString()},"codemania")
     user.tokens=user.tokens.concat({token})
     await user.save() 
     return token
 }
-userSchema.statics.findByCredentials=async (email,password)=>{
+userSchema.statics.findByCredentials=async(email,password)=>{
     const user=await User.findOne({email})
     if(!user){
         throw new Error('Unable to login!')
@@ -84,6 +74,27 @@ userSchema.statics.findByCredentials=async (email,password)=>{
         throw new Error('Unable to login!')
     }
     return user
+}
+userSchema.methods.updateTier=async function(){
+    const user=this
+    if(moment().isAfter(user.anniversaryDate)){
+        if(user.MembershipPoints<1500){
+            user.tier='BASIC',
+            user.MembershipPoints=0
+            user.anniversaryDate=moment(user.anniversaryDate).add(1,'years').format()
+        }
+        else if(user.MembershipPoints>=1500&&user.MembershipPoints<5000){
+            user.tier='VIP',
+            user.MembershipPoints=0
+            user.anniversaryDate==moment(user.anniversaryDate).add(1,'years').format()
+        }
+        else if(user.MembershipPoints>=5000){
+            user.tier='ELITE',
+            user.MembershipPoints=0
+            user.anniversaryDate==moment(user.anniversaryDate).add(1,'years').format()
+        }
+    }
+    await user.save()
 }
 userSchema.pre('save',async function(next){
     const user=this
